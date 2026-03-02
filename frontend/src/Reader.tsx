@@ -28,13 +28,13 @@ export default function Reader({ text }: { text: string }) {
     spans.forEach((sp) => {
       const spRect = sp.getBoundingClientRect();
       positions.push({
-        x: spRect.x,
-        xmid: (spRect.left + spRect.right) / 2,
-        y: spRect.y,
+        x: spRect.x - containerRect.left,
+        xmid: (spRect.left + spRect.right) / 2 - containerRect.left,
+        y: spRect.y - containerRect.top,
         width: spRect.width,
         height: spRect.height,
-        top: spRect.top,
-        bottom: spRect.bottom,
+        top: spRect.top - containerRect.top,
+        bottom: spRect.bottom - containerRect.top,
       });
     });
     setPositions(positions);
@@ -45,15 +45,26 @@ export default function Reader({ text }: { text: string }) {
       <svg className="absolute w-full h-full top-0 left-0 pointer-events-none">
         {positions.map((pos, i) => {
           return (
-            <line
+            // <line
+            //   key={i}
+            //   x1={pos.xmid - 10}
+            //   y1={pos.bottom}
+            //   x2={pos.xmid + 10}
+            //   y2={pos.bottom}
+            //   stroke="red"
+            //   strokeWidth={2}
+            // />
+            <text
               key={i}
-              x1={pos.xmid - 10}
-              y1={pos.bottom}
-              x2={pos.xmid + 10}
-              y2={pos.bottom}
-              stroke="red"
-              strokeWidth={2}
-            />
+              x={pos.xmid}
+              y={pos.bottom}
+              textAnchor="middle"
+              dominantBaseline="hanging"
+              fill="red"
+              fontSize={20}
+            >
+              {words[i].substring(0, 2)}
+            </text>
           );
         })}
       </svg>
@@ -66,7 +77,6 @@ export default function Reader({ text }: { text: string }) {
           );
         })}
       </div>
-      {positions.map((p) => p.x)}
     </div>
   );
 }

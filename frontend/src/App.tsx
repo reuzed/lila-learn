@@ -68,7 +68,15 @@ schwedische, russische, französische, italienische, spanische und eine
 portugiesische (für Brasilien) zu Gesicht gekommen.
   `;
 
-  return <Reader text={extract} />;
+  return (
+    <>
+      As a test have a <br />
+      <br />
+      <br />
+      <br />
+      <Reader text={extract} />
+    </>
+  );
 }
 
 export default App;
