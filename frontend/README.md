@@ -12,3 +12,9 @@ in an array.
 
 Do we generate these parsings in the backend? Probably.
 We can use the internet strings dataset to assign a likeliness to know it value to each word that we need to process, then on the reader, we can show words from rarest to most common.
+
+## Extract Selection and generation
+
+We need a dropdown/search/filtering to pick an appropriate extract to read.
+We also need the ability to fetch news from the API, and upload custom extracts.
+We could also add Project Gutenberg scraping.

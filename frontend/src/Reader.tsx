@@ -12,8 +12,18 @@ type Position = {
   bottom: number;
 };
 
-export default function Reader({ text }: { text: string }) {
-  const words = text.split(" ");
+export type Word = {
+  text: string;
+  followingPunctuation: string;
+  translation: string;
+};
+
+export type ReaderProps = {
+  extract: Word[];
+};
+
+export default function Reader({ extract }: ReaderProps) {
+  const words = extract.map((word) => word.text);
   const containerRef = useRef<HTMLDivElement>(null);
   const [positions, setPositions] = useState<Position[]>([]);
   useEffect(() => {
@@ -63,7 +73,7 @@ export default function Reader({ text }: { text: string }) {
               fill="red"
               fontSize={20}
             >
-              {words[i].substring(0, 2)}
+              {extract[i].translation}
             </text>
           );
         })}
