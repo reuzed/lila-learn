@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { hashIndex } from "./utils";
 // import type { HTMLDivElement } from "react";
 
 // type Coord = { x: number; y: number };
@@ -20,9 +21,10 @@ export type Word = {
 
 export type ReaderProps = {
   extract: Word[];
+  threshhold: number;
 };
 
-export default function Reader({ extract }: ReaderProps) {
+export default function Reader({ extract, threshhold }: ReaderProps) {
   const words = extract.map((word) => word.text);
   const containerRef = useRef<HTMLDivElement>(null);
   const [positions, setPositions] = useState<Position[]>([]);
@@ -54,28 +56,30 @@ export default function Reader({ extract }: ReaderProps) {
     <div className="relative" ref={containerRef}>
       <svg className="absolute w-full h-full top-0 left-0 pointer-events-none">
         {positions.map((pos, i) => {
-          return (
-            // <line
-            //   key={i}
-            //   x1={pos.xmid - 10}
-            //   y1={pos.bottom}
-            //   x2={pos.xmid + 10}
-            //   y2={pos.bottom}
-            //   stroke="red"
-            //   strokeWidth={2}
-            // />
-            <text
-              key={i}
-              x={pos.xmid}
-              y={pos.bottom}
-              textAnchor="middle"
-              dominantBaseline="hanging"
-              fill="red"
-              fontSize={20}
-            >
-              {extract[i].translation}
-            </text>
-          );
+          if (hashIndex(i) < threshhold) {
+            return (
+              // <line
+              //   key={i}
+              //   x1={pos.xmid - 10}
+              //   y1={pos.bottom}
+              //   x2={pos.xmid + 10}
+              //   y2={pos.bottom}
+              //   stroke="red"
+              //   strokeWidth={2}
+              // />
+              <text
+                key={i}
+                x={pos.xmid}
+                y={pos.bottom}
+                textAnchor="middle"
+                dominantBaseline="hanging"
+                fill="red"
+                fontSize={20}
+              >
+                {extract[i].translation}
+              </text>
+            );
+          }
         })}
       </svg>
       <div className="mt-4 m-auto w-2/3 text-2xl/15">
