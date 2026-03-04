@@ -86,7 +86,8 @@ export default function Reader({ extract, threshhold }: ReaderProps) {
         {words.map((w, i) => {
           return (
             <span key={i} data-word-id={i}>
-              {w}{" "}
+              {w}
+              {extract[i].followingPunctuation}
             </span>
           );
         })}
