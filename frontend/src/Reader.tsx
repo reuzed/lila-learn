@@ -85,10 +85,16 @@ export default function Reader({ extract, threshhold }: ReaderProps) {
       <div className="mt-4 m-auto w-2/3 text-2xl/15">
         {words.map((w, i) => {
           return (
-            <span key={i} data-word-id={i}>
-              {w}
+            <>
+              <span
+                key={i}
+                onClick={() => alert(extract[i].translation)}
+                data-word-id={i}
+              >
+                {w}
+              </span>
               {extract[i].followingPunctuation}
-            </span>
+            </>
           );
         })}
       </div>
